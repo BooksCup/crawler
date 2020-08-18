@@ -27,5 +27,24 @@ class WeavePriceItem(scrapy.Item):
     change = scrapy.Field()
     # 报价日期
     date = scrapy.Field()
+    pass
 
+
+class ExchangeRateItem(scrapy.Item):
+    # 货币名
+    currencyName = scrapy.Field()
+    # 现汇买入价
+    currencyBuy = scrapy.Field()
+    # 现汇卖出价
+    currencySell = scrapy.Field()
+    # 现钞买入价
+    cashBuy = scrapy.Field()
+    # 现钞卖出价
+    cashSell = scrapy.Field()
+    # 中行折算价
+    middle = scrapy.Field()
+    # 发布日期
+    publishDate = scrapy.Field()
+    # 发布时间
+    publishTime = scrapy.Field()
     pass

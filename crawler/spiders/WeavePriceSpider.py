@@ -11,8 +11,6 @@ class WeavePriceSpider(scrapy.Spider):
     start_urls = ['https://www.tnc.com.cn/market/average-price.html']
 
     headers = {
-        # "HOST": "www.zhihu.com",
-        # "Referer": "https://www.zhizhu.com",
         'User-Agent': "Mozilla/5.0 (Windows NT 6.1; WOW64; rv:51.0) Gecko/20100101 Firefox/51.0"
     }
 
