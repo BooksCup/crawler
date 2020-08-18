@@ -28,13 +28,13 @@ class CrawlerPipeline(object):
         create_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         self.cur.execute(
-            "select 1 from t_weave_price_copy where price_type = %s and price_name = %s and price_date = %s",
+            "select 1 from t_weave_price where price_type = %s and price_name = %s and price_date = %s",
             (item['type'], item['name'], item['date']))
         result = self.cur.fetchone()
         if result:
             print('数据已存在')
         else:
-            sql = 'insert into t_weave_price_copy(price_id, price_type, price_name, price_last_trade, price_unit, price_change, price_date, price_create_time)' \
+            sql = 'insert into t_weave_price(price_id, price_type, price_name, price_last_trade, price_unit, price_change, price_date, price_create_time)' \
                   ' values(%s, %s, %s, %s, %s, %s, %s, %s)'
             data = (
                 str(uuid.uuid1()).replace("-", ""),
