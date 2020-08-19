@@ -5,6 +5,9 @@ from crawler.items import WeavePriceItem
 
 class WeavePriceSpider(scrapy.Spider):
     name = "WeavePrice"
+    custom_settings = {
+        'ITEM_PIPELINES': {'crawler.pipelines.CrawlerPipeline': 300},
+    }
     start_urls = ['https://www.tnc.com.cn/market/average-price.html']
 
     headers = {
