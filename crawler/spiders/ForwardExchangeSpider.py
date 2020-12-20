@@ -6,8 +6,8 @@ from crawler.items import ForwardRateItem
 
 
 # 远期汇率
-class ForwardRateSpider(scrapy.Spider):
-    name = "ForwardRate"
+class ForwardExchangeSpider(scrapy.Spider):
+    name = "ForwardExchange"
     custom_settings = {
         'ITEM_PIPELINES': {'crawler.pipelines.ForwardRatePipeline': 302},
     }

@@ -151,13 +151,13 @@ class ForwardRatePipeline(object):
         create_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
 
         self.cur.execute(
-            "select 1 from t_forward_rate where currency_name = %s and exchange_hour = %s and publish_date = %s",
+            "select 1 from t_forward_exchange where currency_name = %s and exchange_hour = %s and publish_date = %s",
             (item['currencyName'], item['exchangeHour'], item['publishDate']))
         result = self.cur.fetchone()
         if result:
             print('数据已存在')
         else:
-            sql = 'insert into t_forward_rate(' \
+            sql = 'insert into t_forward_exchange(' \
                   'id,' \
                   ' currency_name,' \
                   ' currency_code,' \
