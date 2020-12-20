@@ -5,6 +5,7 @@ from scrapy.http import Request
 from crawler.items import ExchangeRateItem
 
 
+# 实时汇率
 class ExchangeRateSpider(scrapy.Spider):
     name = "ExchangeRate"
     custom_settings = {

@@ -14,6 +14,7 @@ class CrawlerItem(scrapy.Item):
     pass
 
 
+# 纺织行情
 class WeavePriceItem(scrapy.Item):
     # 品名
     name = scrapy.Field()
@@ -30,7 +31,7 @@ class WeavePriceItem(scrapy.Item):
     pass
 
 
-# 汇率
+# 实时汇率
 class ExchangeRateItem(scrapy.Item):
     # 货币名
     currencyName = scrapy.Field()

@@ -3,6 +3,7 @@ import scrapy
 from crawler.items import WeavePriceItem
 
 
+# 纺织行情
 class WeavePriceSpider(scrapy.Spider):
     name = "WeavePrice"
     custom_settings = {
