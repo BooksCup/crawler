@@ -132,3 +132,54 @@ class ExchangeRatePipeline(object):
                 moments_data)
             self.client.commit()
         return item
+
+
+class ForwardRatePipeline(object):
+    def __init__(self):
+        self.client = pymysql.connect(
+            host=settings.MYSQL_HOST,
+            port=3306,
+            user=settings.MYSQL_USER,
+            passwd=settings.MYSQL_PASSWORD,
+            db=settings.MYSQL_DBNAME,
+            charset='utf8'
+        )
+        self.cur = self.client.cursor()
+
+    def process_item(self, item, spider):
+        create_date = datetime.datetime.now().strftime("%Y-%m-%d")
+        create_time = datetime.datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+
+        self.cur.execute(
+            "select 1 from t_forward_rate where currency_name = %s and exchange_hour = %s and publish_date = %s",
+            (item['currencyName'], item['exchangeHour'], item['publishDate']))
+        result = self.cur.fetchone()
+        if result:
+            print('数据已存在')
+        else:
+            sql = 'insert into t_forward_rate(' \
+                  'id,' \
+                  ' currency_name,' \
+                  ' currency_code,' \
+                  ' exchange_hour,' \
+                  ' buy,' \
+                  ' sell,' \
+                  ' middle,' \
+                  ' publish_date,' \
+                  ' create_time' \
+                  ')' \
+                  ' values(%s, %s, %s, %s, %s, %s, %s, %s, %s)'
+            data = (
+                str(uuid.uuid1()).replace("-", ""),
+                item['currencyName'],
+                item['currencyCode'],
+                item['exchangeHour'],
+                item['buy'],
+                item['sell'],
+                item['middle'],
+                item['publishDate'],
+                create_time
+            )
+            self.cur.execute(sql, data)
+            self.client.commit()
+        return item
