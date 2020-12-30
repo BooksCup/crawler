@@ -69,3 +69,34 @@ class ForwardRateItem(scrapy.Item):
     # 汇率日期
     publishDate = scrapy.Field()
     pass
+
+
+# 热门汇率
+class HotExchangeItem(scrapy.Item):
+    # 货币名
+    currencyName = scrapy.Field()
+    # 当前价格
+    currentPrice = scrapy.Field()
+    # 价格变动
+    change = scrapy.Field()
+    # 今开
+    todayPrice = scrapy.Field()
+    # 昨收
+    yesterdayPrice = scrapy.Field()
+    # 最高
+    highestPrice = scrapy.Field()
+    # 最低
+    lowestPrice = scrapy.Field()
+    # 更新时间
+    createTime = scrapy.Field()
+    # 标题样式
+    titleCss = scrapy.Field()
+    # 今开样式
+    todayPriceCss = scrapy.Field()
+    # 昨收样式
+    yesterdayPriceCss = scrapy.Field()
+    # 最高样式
+    highestPriceCss = scrapy.Field()
+    # 最低样式
+    lowestPriceCss = scrapy.Field()
+    pass

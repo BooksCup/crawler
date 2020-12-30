@@ -183,3 +183,61 @@ class ForwardRatePipeline(object):
             self.cur.execute(sql, data)
             self.client.commit()
         return item
+
+
+class HotExchangePipeline(object):
+    def __init__(self):
+        self.client = pymysql.connect(
+            host=settings.MYSQL_HOST,
+            port=3306,
+            user=settings.MYSQL_USER,
+            passwd=settings.MYSQL_PASSWORD,
+            db=settings.MYSQL_DBNAME,
+            charset='utf8'
+        )
+        self.cur = self.client.cursor()
+
+    def process_item(self, item, spider):
+        self.cur.execute(
+            "select 1 from t_hot_exchange where currency_name = %s and create_time = %s",
+            (item['currencyName'], item['createTime']))
+        result = self.cur.fetchone()
+        if result:
+            print('数据已存在')
+        else:
+            sql = 'insert into t_hot_exchange(' \
+                  'id,' \
+                  ' currency_name,' \
+                  ' current_price,' \
+                  ' price_change,' \
+                  ' today_price,' \
+                  ' yesterday_price,' \
+                  ' highest_price,' \
+                  ' lowest_price,' \
+                  ' create_time,' \
+                  ' title_css,' \
+                  ' today_price_css,' \
+                  ' yesterday_price_css,' \
+                  ' highest_price_css,' \
+                  ' lowest_price_css' \
+                  ')' \
+                  ' values(%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)'
+            data = (
+                str(uuid.uuid1()).replace("-", ""),
+                item['currencyName'],
+                item['currentPrice'],
+                item['change'],
+                item['todayPrice'],
+                item['yesterdayPrice'],
+                item['highestPrice'],
+                item['lowestPrice'],
+                item['createTime'],
+                item['titleCss'],
+                item['todayPriceCss'],
+                item['yesterdayPriceCss'],
+                item['highestPriceCss'],
+                item['lowestPriceCss']
+            )
+            self.cur.execute(sql, data)
+            self.client.commit()
+        return item
